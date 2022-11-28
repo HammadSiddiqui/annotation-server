@@ -15,6 +15,10 @@ app.use(bodyParser.json({ limit: '50mb' }))
 
 require('./database')()
 
+// Calling Application Routes
+let apiRoutes = require('./routes')
+app.use('/', apiRoutes)
+
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', (req, res) => {
     res.send('hello world')
