@@ -21,5 +21,10 @@ app.use('/', apiRoutes)
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', (req, res) => {
-    res.send('hello world')
+    res.send('Displaying all annotations')
+})
+
+
+app.listen(process.env.PORT, () => {
+    console.log(`Engine listening on port ${process.env.PORT}`)
 })

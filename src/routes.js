@@ -15,8 +15,6 @@ router.get(
     annotationController.view
 )
 
-// GET Check if Identity Document number exists
-router.get('/'
-)
+
 
 module.exports = router
