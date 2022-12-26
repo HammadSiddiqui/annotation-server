@@ -11,8 +11,19 @@ const annotationController = require('./controllers/annotations')
 
 
 router.get(
-    '/annotation/:idenfoId',
+    '/annotation/:id',
     annotationController.view
+)
+
+
+router.post(
+    '/annotation/create',
+    annotationController.create
+)
+
+router.post(
+    '/annotation/delete',
+    annotationController.delete
 )
 
 

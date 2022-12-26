@@ -12,8 +12,13 @@ const AnnotationModel = require('../models/annotation-model')
 exports.view = async function(request, response) {
     try {
         //TODO: fetch annotation from the DB
-        response.status(200).json({
-            data: "OK",
+        console.log(request.query)
+        let annotation  = await AnnotationModel.findById(
+            request.query.id);
+
+        response.json({
+            "status" : "success",
+            "data" : annotation
         })
 
     } catch (error) {
@@ -27,12 +32,28 @@ exports.view = async function(request, response) {
 
 exports.create = async function(request, response) {
     try {
-        //TODO: create annotation from the DB
+
+        let annotation = new AnnotationModel
+        annotation.content = request.body.data
+        annotation.save()
+        // await annotation.save(request.body.data, function(err, data) {
+        //     if (err)
+        //         console.log(err)
+        //     // console.log(data.id)
+        //     // annotation = data.id.toString()
+        // })
+        console.log(annotation)
+        response.json({
+            "status" : "success",
+            "data" : annotation
+        })
+
+
 
     } catch (error) {
         console.log(error)
         response.status(500).json({
-            message: error,
+            message: "error : " + error,
         })
     }
 
@@ -41,12 +62,17 @@ exports.create = async function(request, response) {
 exports.delete = async function(request, response) {
     try {
         //TODO: create annotation from the DB
+        let data = request.body.data;
+        
+
 
     } catch (error) {
         console.log(error)
         response.status(500).json({
-            message: error,
+            message: error
         })
     }
-
 }
+
+
+
