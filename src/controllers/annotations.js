@@ -11,10 +11,11 @@ const AnnotationModel = require('../models/annotation-model')
  */
 exports.view = async function(request, response) {
     try {
-        //TODO: fetch annotation from the DB
-        console.log(request.query)
+      
+        //console.log(request.query)
+
         let annotation  = await AnnotationModel.findById(
-            request.query.id);
+            request.params.id);
 
         response.json({
             "status" : "success",
@@ -35,7 +36,7 @@ exports.create = async function(request, response) {
 
         let annotation = new AnnotationModel
         annotation.content = request.body.data
-        annotation.save()
+        await annotation.save()
         // await annotation.save(request.body.data, function(err, data) {
         //     if (err)
         //         console.log(err)
