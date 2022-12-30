@@ -9,6 +9,11 @@ const annotationController = require('./controllers/annotations')
 
 
 
+router.get(
+    '/annotation/',
+    annotationController.viewAllOrFilter
+)
+
 
 router.get(
     '/annotation/:id',

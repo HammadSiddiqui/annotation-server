@@ -3,6 +3,20 @@ const mongoose = require('mongoose')
 const AnnotationModel = require('../models/annotation-model')
 
 
+exports.viewAllOrFilter = async function(request, response) {
+    let query = request.query
+    let creator = query.creator
+    console.log("user: " + creator)
+    if (query != null) {
+        let annotation  = await AnnotationModel.find({'content.creator' : creator});
+       // console.log(annotation)
+        response.json({
+            "status" : "success",
+            "data" : annotation
+        })
+    }
+}
+
 
 /* view annotation
  * @description This method will return customer details
@@ -11,16 +25,19 @@ const AnnotationModel = require('../models/annotation-model')
  */
 exports.view = async function(request, response) {
     try {
-      
-        //console.log(request.query)
 
-        let annotation  = await AnnotationModel.findById(
-            request.params.id);
+        if(request.params.id != null) {
+            let annotation  = await AnnotationModel.findById(
+                request.params.id);
 
-        response.json({
-            "status" : "success",
-            "data" : annotation
-        })
+            response.json({
+                "status" : "success",
+                "data" : annotation.content
+            })
+        } else {
+            throw "No Params were passed to the Annotation Server"
+        }
+
 
     } catch (error) {
         console.log(error)
