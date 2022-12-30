@@ -6,14 +6,23 @@ const AnnotationModel = require('../models/annotation-model')
 exports.viewAllOrFilter = async function(request, response) {
     let query = request.query
     let creator = query.creator
-    console.log("user: " + creator)
+    let source = query.source
+    console.log("creator: " + creator)
+    console.log("source: " + source)
     if (query != null) {
-        let annotation  = await AnnotationModel.find({'content.creator' : creator});
-       // console.log(annotation)
-        response.json({
-            "status" : "success",
-            "data" : annotation
-        })
+        if (creator != null) {
+            let annotation  = await AnnotationModel.find({'content.creator' : creator});
+            response.json({data : annotation})
+        } else if (source != null) {
+            let annotation  = await AnnotationModel.find({'content.target.source' : source});
+            response.json({data : annotation})
+        }
+
+    }
+    else {
+        let annotation  = await AnnotationModel.find();
+         console.log(annotation)
+        response.json({data: annotation})
     }
 }
 
@@ -31,7 +40,6 @@ exports.view = async function(request, response) {
                 request.params.id);
 
             response.json({
-                "status" : "success",
                 "data" : annotation.content
             })
         } else {
@@ -54,12 +62,7 @@ exports.create = async function(request, response) {
         let annotation = new AnnotationModel
         annotation.content = request.body.data
         await annotation.save()
-        // await annotation.save(request.body.data, function(err, data) {
-        //     if (err)
-        //         console.log(err)
-        //     // console.log(data.id)
-        //     // annotation = data.id.toString()
-        // })
+
         console.log(annotation)
         response.json({
             "status" : "success",

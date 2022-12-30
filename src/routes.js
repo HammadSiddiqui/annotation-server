@@ -8,6 +8,10 @@ const activityStreamController = require('./controllers/activityStreams')
 const annotationController = require('./controllers/annotations')
 
 
+router.get(
+    '/',
+    annotationController.viewAllOrFilter
+)
 
 router.get(
     '/annotation/',
